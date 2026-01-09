@@ -1,0 +1,71 @@
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>library_app</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">📚 図書館アプリ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="">書籍検索</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">借りている本一覧</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('request_book')}}">図書リクエスト</a>
+                    </li>
+                </ul>
+                <span class="navbar-text text-light me-3">
+                    ようこそ {{username }} さん
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mb-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                {{ render_messages(dismissible=True) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">📋 図書リクエスト一覧</h2>
+        {% for r in requests %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ r.title }}</h5>
+
+                <p class="card-text">
+                    著者：{{ r.author }}<br>
+                    理由：{{ r.reason }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        <a href="{{ url_for('request_book') }}" class="btn btn-primary">
+            新しく申請する
+        </a>
+    </div>
+
+    {{ bootstrap.load_js() }}
+</body>
+
+</html>
