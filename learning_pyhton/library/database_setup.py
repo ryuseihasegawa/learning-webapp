@@ -22,6 +22,11 @@ def setup_database():
             username='user1', 
             password_hash=generate_password_hash('userpass'), 
         )
+        admin_user = User(
+            username='admin', 
+            password_hash=generate_password_hash('adminpass'), 
+            role = 'admin'
+        )
 
         #本を追加
         book1 = Book(
@@ -48,7 +53,7 @@ def setup_database():
             isbn='978-4000000041'
         )
 
-        db.session.add_all([tama_user, general_user, book1, book2, book3, book4])
+        db.session.add_all([tama_user, general_user,admin_user ,book1, book2, book3, book4])
         db.session.commit()
 
         loan1 = Loan(

@@ -6,6 +6,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    role = db.Column(db.String(10), nullable=True)
     loans = db.relationship("Loan", back_populates="user")
 
 class BookRequest(db.Model):

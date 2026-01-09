@@ -29,10 +29,19 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('request_book')}}">図書リクエスト</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('loan_history')}}">貸出履歴</a>
+          </li>
         </ul>
         <span class="navbar-text text-light me-3">
           ようこそ {{ username }} さん
         </span>
+        <form method="POST" action="{{ url_for('logout') }}" class="text-light me-3">
+          <button type="submit" class="btn btn-secondary">
+            ログアウト
+          </button>
+        </form>
+
       </div>
     </div>
   </nav>

@@ -24,3 +24,15 @@ class SearchForm(FlaskForm):
                             render_kw={"placeholder": "キーワードを入力"},
                             )
     submit = SubmitField("検索")
+
+class EditForm(FlaskForm):
+    title = StringField("書名", validators=[DataRequired()])
+    author = StringField("著者", validators=[DataRequired()])
+    isbn  = StringField("ISBN(任意)", validators=[DataRequired()])
+    submit = SubmitField("編集する")
+
+class EntryForm(FlaskForm):
+    title = StringField("書名", validators=[DataRequired()])
+    author = StringField("著者", validators=[DataRequired()])
+    isbn  = StringField("ISBN(任意)", validators=[DataRequired()])
+    submit = SubmitField("追加する")

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {{ render_messages(dismissible=True) }}
+            <h2 class="mb-4">✒書籍登録</h2>
+            <p class="mb-4">新たに書籍を登録します。</p>
+            {{ render_form(form, button_map={'submit':'primary'}) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
