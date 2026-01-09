@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, url_for, flash, session
 from flask_bootstrap import Bootstrap5
-from forms import LoginForm, BookRequestForm, SearchForm, EditForm, EntryForm
+from forms import LoginForm, BookRequestForm, SearchForm, EditForm, EntryForm, RegisterForm
 from models import db, User, BookRequest, Book, Loan
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import or_
 
 # Webアプリを作成し、appという変数に代入する
@@ -19,9 +19,6 @@ db.init_app(app)
 # ログイン
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    user_id = session.get("user_id")
-    if not user_id:
-        return redirect(url_for("login"))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -48,7 +45,7 @@ def index():
         return redirect(url_for("login"))
 
     current_user = User.query.get(user_id)
-    user_role = User.query.filter_by(username=current_user.username).first()
+    #user_role = User.query.filter_by(username=current_user.username).first()
 
     today = datetime.now().strftime("%Y年%m月%d日")
     return_deadline = (datetime.now() + timedelta(weeks=2)).strftime("%Y年%m月%d日")
@@ -353,6 +350,30 @@ def entry_book():
         return redirect(url_for("book_control"))
 
     return render_template("entry_book.html", form=form, entry_book = entry_book,username=current_user.username)
+
+# ユーザー登録
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    form = RegisterForm()
+
+    # DBに書き込み
+    if form.validate_on_submit():
+        if form.password1.data == form.password2.data :
+            new_user = User(
+                username = form.username.data, 
+                password_hash = generate_password_hash(form.password1.data), 
+            )
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash("ユーザー登録が完了しました", "success")
+            return redirect(url_for("login"))
+        
+        flash("パスワードが一致しません", "danger")
+        return redirect(url_for("register"))
+
+    return render_template("register.html",  form = form)
 
 
 if __name__ == "__main__":

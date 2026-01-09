@@ -18,9 +18,9 @@ db.init_app(app)
 #ログイン
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    user_id = session.get("user_id")
-    if not user_id:
-        return redirect(url_for("login"))
+    #user_id = session.get("user_id")
+    #if not user_id:
+    #    return redirect(url_for("login"))
 
     form = LoginForm()
     if form.validate_on_submit():

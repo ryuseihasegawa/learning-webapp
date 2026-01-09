@@ -20,6 +20,12 @@
             </div>
         </div>
     </div>
+    <form method="GET" action="{{ url_for('register') }}" class="text-center mt-5">
+        <button type="submit" class="btn btn-success btn-lg">
+            新規ユーザー登録
+        </button>
+    </form>
+
     {{ bootstrap.load_js() }}
 </body>
 

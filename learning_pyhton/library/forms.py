@@ -36,3 +36,11 @@ class EntryForm(FlaskForm):
     author = StringField("著者", validators=[DataRequired()])
     isbn  = StringField("ISBN(任意)", validators=[DataRequired()])
     submit = SubmitField("追加する")
+
+class RegisterForm(FlaskForm):
+    username = StringField(
+        "ユーザーID", validators=[DataRequired(), Length(min=2, max=80)]
+    )
+    password1 = PasswordField("パスワード", validators=[DataRequired()])
+    password2 = PasswordField("パスワード（確認用）", validators=[DataRequired()])
+    submit = SubmitField("ユーザー登録")

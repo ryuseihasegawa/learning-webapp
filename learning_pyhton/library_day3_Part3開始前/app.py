@@ -9,9 +9,9 @@ app.config['SECRET_KEY'] = "SECRET_KEY_FOR_DEVELOPMENT"
 Bootstrap5(app)
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    user_id = session.get("user_id")
-    if user_id: #user_idが空では無かったら
-        return redirect(url_for("index"))   
+    #user_id = session.get("user_id")
+    #if user_id: #user_idが空では無かったら
+    #    return redirect(url_for("index"))   
 
     form = LoginForm()
     if form.validate_on_submit():
