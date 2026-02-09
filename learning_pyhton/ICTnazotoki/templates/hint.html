@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="mb-0">ヒント集</h2>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-sm">戻る</a>
+            </div>
+
+            <p class="text-muted mb-4">
+                各Questionをクリックするとヒントが表示されます。必要なところだけ開いて進めてください。
+            </p>
+
+            {# ---- ここにヒント本文を書いていく（例：後から編集しやすい） ---- #}
+            {% set HINTS = {
+            1: "Excelのavarage関数とSTDEV.P関数を使用しよう。",
+            2: "TCP/UDPとポート番号から、どのブロック間の通信が許可されているか確認しよう。",
+            3: "人の視線はZ型、またはF型に動くといわれています。",
+            4: "（ここにQuestion4のヒント）",
+            5: "Answerが「“」と「”」で囲われているが、他にも同様の記載はなかっただろうか？",
+            6: "Lv7:App Lv6:Pre Lv5:Ses Lv4:Tra Lv3:Net Lv2:Dat Lv1:But/Phy",
+            7: "赤いピンのマークは見覚えがあるはず。インターネットを活用しよう。",
+            8: "ひらめきは不要の知識問題！各工程の具体的な作業をイメージしよう。",
+            9: "世界標準のルール。文字を一定のルールで表現するものといえば？",
+            10: "同じ読み方で違う意味の2文字の言葉を考えよう。",
+            11: "色と形に注目。きっと利用したことがあるはずだ。"
+            } %}
+            {# ------------------------------------------------------------ #}
+
+            <!-- Accordion -->
+            <div class="accordion" id="hintAccordion">
+                {% for i in range(1, 12) %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ i }}">
+                        <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapse{{ i }}"
+                            aria-expanded="false"
+                            aria-controls="collapse{{ i }}">
+                            Question{{ i }}
+                        </button>
+                    </h2>
+
+                    <div id="collapse{{ i }}" class="accordion-collapse collapse"
+                        aria-labelledby="heading{{ i }}" data-bs-parent="#hintAccordion">
+                        <div class="accordion-body">
+                            <div class="mb-2">
+                                {{ HINTS[i] }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-4 d-flex gap-2 flex-wrap">
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="expandAll()">
+                    すべて開く
+                </button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="collapseAll()">
+                    すべて閉じる
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Bootstrap 5 の Collapse API を利用（Bootstrap JS が base.html で読み込まれている前提）
+    function expandAll() {
+        for (let i = 1; i <= 11; i++) {
+            const el = document.getElementById(`collapse${i}`);
+            if (el) {
+                const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+                c.show();
+            }
+        }
+    }
+
+    function collapseAll() {
+        for (let i = 1; i <= 11; i++) {
+            const el = document.getElementById(`collapse${i}`);
+            if (el) {
+                const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+                c.hide();
+            }
+        }
+    }
+</script>
+
+{% endblock %}

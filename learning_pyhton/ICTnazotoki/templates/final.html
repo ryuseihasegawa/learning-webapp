@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- タイトル -->
+            <h2 class="text-center mb-4">Question Final</h2>
+
+            <p class="mb-3">
+                よくぞここまでたどり着いた。ここからはさらにひらめきが重要になる。<br>
+                <strong>初心を忘れず、広い視野を持って、是非とも最後まで頑張ってくれ。</strong>
+            </p>
+
+            <!-- 本文 -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <ol class="mb-0">
+                        <li class="mb-2">
+                            まずは事務局に合言葉「<strong>{{ passphrase }}</strong>」を伝えてください。
+                        </li>
+
+                        <li class="mb-2">
+                            受け取ったモノを使って、現在地を作れ。
+                        </li>
+
+                        <li class="mb-2">
+                            出発点から Answer1〜Answer10 を順に経由し、
+                            <div class="text-center mb-4 mt-3">
+
+                                <img src="{{ url_for('static', filename='test.png') }}" class="img-fluid"
+                                    style="max-width: 250px; border-radius: 8px;">
+
+                            </div>
+                            の最寄り駅まで繋げ。
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 回答フォーム -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="mb-3">解答フォーム</h5>
+
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ form.finalanswer.label(class="form-label") }}
+                            {{ form.finalanswer(class="form-control", placeholder="最終解答を入力してください") }}
+
+                            {% if form.finalanswer.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for e in form.finalanswer.errors %}
+                                <div>{{ e }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 戻るボタン -->
+            <div class="text-center mt-4">
+                <a href=" {{ url_for('index') }}" class="btn btn-outline-secondary">
+                戻る
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
